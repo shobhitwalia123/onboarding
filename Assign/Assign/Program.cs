@@ -1,7 +1,13 @@
 ﻿using Assign.Exception_Handling;
+using Assign.Expando;
 using Assign.MemoryManagment;
 using Assign.Task_Linq;
+using Assign.TaskOnCollectionAndGeneric;
+using Assign.TaskOnExpressionBodiedMembers;
+using Assign.TaskOnTuple;
 using System;
+using System.Dynamic;
+using System.Linq;
 
 namespace Assign
 {
@@ -11,10 +17,10 @@ namespace Assign
         {
             //MemoryManamgentTask1();
             //ExceptionHandling();
-
-            MyClassTask m = new MyClassTask();
-            m.GetGroupByDepartmentId();
-
+            //TaskonCollectionGeneric();
+            //CustomTuple.Execute();
+            //ExecuteExpressionBodied();
+            // ExecuteExpando();
             Console.ReadKey();
         }
 
@@ -23,6 +29,15 @@ namespace Assign
         {
             var exception = new SampleException();
             exception.Exception();
+        }
+
+        #endregion
+
+        #region TaskLinq
+        private static void TaskLinq()
+        {
+            var exception = new MyClassTask();
+            exception.GetHighestSalaryUnderEachDepartment();
         }
 
         #endregion
@@ -48,5 +63,36 @@ namespace Assign
             }
         }
         #endregion
+
+        #region TaskOnCollectionAndGeneric
+        public static void TaskonCollectionGeneric()
+        {
+            var students = Student.GetSampleData();
+
+            Student.Print(students.Where(p => p.RegistrationNumber == 1025).Select(p => p).FirstOrDefault());
+            Array.Sort(students, delegate (Student x, Student y) { return x.totalScore.CompareTo(y.totalScore); });
+        }
+        #endregion
+
+        # region ExecuteExpressionBodied
+        private static void ExecuteExpressionBodied()
+        {
+            ExpressionBodiedMemberForConstructor expforConstructor = new ExpressionBodiedMemberForConstructor();
+
+            ExpressionBodiedMemberForFinalizer expforFinalizer = new ExpressionBodiedMemberForFinalizer();
+        }
+        #endregion
+
+        #region Expando
+        public static void ExecuteExpando()
+        {
+            dynamic employee = new ExpandoObject();
+            employee.Name = "Shobhit";
+            employee.Email = "shobhitwalia@gmail.com";
+
+            ExpandoCustomClass.PrintEmployeeDetails(employee);
+        }
+        #endregion
+
     }
 }
